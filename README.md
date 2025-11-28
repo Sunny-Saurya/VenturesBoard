@@ -1,109 +1,64 @@
 <div align="center">
-  <!-- <br /> -->
-    <!-- <a href="https://aayushbharti.vercel.app" target="_blank">
-      <img src="https://github.com/user-attachments/assets/471e2baa-8781-43b8-aaed-62e313d03e99" alt="Project Banner">
-    </a> -->
-  <!-- <br /> -->
 
-  <div>
-    <img src="https://img.shields.io/badge/-Typescript-black?style=for-the-badge&logoColor=white&logo=react&color=3178C6" alt="typescript" />
-    <img src="https://img.shields.io/badge/-Next_JS-black?style=for-the-badge&logoColor=white&logo=nextdotjs&color=000000" alt="nextdotjs" />
-    <img src="https://img.shields.io/badge/-Tailwind_CSS-black?style=for-the-badge&logoColor=white&logo=tailwindcss&color=06B6D4" alt="tailwindcss" />
-    <img src="https://img.shields.io/badge/-Sanity-black?style=for-the-badge&logoColor=white&logo=sanity&color=F03E2F" alt="sanity" />
-  </div>
+  <h3>🚀 VentureBoard – Startup Directory Platform</h3>
+![alt text](image.png)
+  <p>
+    A platform where entrepreneurs can pitch their startup ideas, browse other innovative concepts, and gain visibility through a clean and minimal user experience.
+  </p>
 
-<h3 align="center">Next ventures - Startup Directory Platform</h3>
-
-   <div align="center">
-     A platform where entrepreneurs can submit their startup ideas for virtual pitch competitions, browse other pitches, and gain exposure through a clean minimalistic design for a smooth user experience.
-    </div>
 </div>
 
-## 📋 <a name="table">Table of Contents</a>
+---
 
-1. 🤖 [Introduction](#introduction)
-2. ⚙️ [Tech Stack](#tech-stack)
-3. 🔋 [Features](#features)
-4. 🤸 [Quick Start](#quick-start)
-<!-- 5. 🚀 [More](#more) -->
+## 📌 Introduction
 
-## 🚨 About
+VentureBoard is a simple and modern platform designed for founders, creators, and innovators to share their startup ideas. Users can submit their concept, describe their idea, upload visuals, and let others explore and engage with their innovation.
 
-This project showcases the latest features of Next.js 15, including Next.js Form
-for seamless client-side form submissions, Unstable After for background tasks,
-Server Component HMR Cache for faster development, and Partial Prerendering for
-performance optimization.
+This platform focuses on ease-of-use, creativity, and giving new founders a place to express their vision.
 
-## <a name="introduction">🤖 Introduction</a>
+---
 
-A Next.js 15 platform where entrepreneurs can submit their startup ideas for
-virtual pitch competitions, browse other pitches, and gain exposure through a
-clean minimalistic design for a smooth user experience.
+## 🌟 Features
 
-## <a name="tech-stack">⚙️ Tech Stack</a>
+### 👉 Submit Startup Pitches  
+Users can share their ideas with title, description, category, and optional images or videos.
 
-- React 19
-- Next.js 15
-- TypeScript
-- Sanity
-- Next-Auth
-- TailwindCSS
-- ShadCN
-- Groq
-- Sentry
-- Markdown
+### 👉 Explore Startup Ideas  
+Browse other users’ ideas in a clean card-style layout with smooth navigation.
 
-## <a name="features">🔋 Features</a>
+### 👉 GitHub Login  
+Users can sign in quickly and securely using their GitHub account.
 
-👉 **Live Content API**: Displays the latest startup ideas dynamically on the
-homepage using Sanity's Content API.
+### 👉 Pitch Details Page  
+Each pitch contains a dedicated page showing more info, visuals, and description.
 
-👉 **GitHub Authentication**: Allows users to log in easily using their GitHub
-account.
+### 👉 Profile Page  
+Users can view all the pitches they’ve submitted in one place.
 
-👉 **Pitch Submission**: Users can submit startup ideas, including title,
-description, category, and multimedia links ( image or video).
+### 👉 Editor Picks  
+Admins can highlight top or trending ideas via the Editor's Choice section.
 
-👉 **View Pitches**: Browse through submitted ideas with filtering options by
-category.
+### 👉 Views Counter  
+Each pitch shows how many times it has been viewed (instead of using likes or upvotes).
 
-👉 **Pitch Details Page**: Click on any pitch to view its details, with
-multimedia and description displayed.
+### 👉 Search Function  
+Users can search ideas with keywords and instantly view matching results.
 
-👉 **Profile Page**: Users can view the list of pitches they've submitted.
+### 👉 Clean Minimal UI  
+The interface is designed to be distraction-free, clean, and focused on content.
 
-👉 **Editor Picks**: Admins can highlight top startup ideas using the "Editor
-Picks" feature managed via Sanity Studio.
+---
 
-👉 **Views Counter**: Tracks the number of views for each pitch instead of an
-upvote system.
+## 📁 Quick Start
 
-👉 **Search**: Search functionality to load and view pitches efficiently.
+Follow these steps to run the project locally:
 
-👉 **Minimalistic Design**: Fresh and simple UI with only the essential pages
-for ease of use and a clean aesthetic.
-
-and many more, including the latest **React 19**, **Next.js 15** and **Sanity**
-features alongside code architecture and reusability
-
-## <a name="quick-start">🤸 Quick Start</a>
-
-Follow these steps to set up the project locally on your machine.
-
-**Prerequisites**
-
-Make sure you have the following installed on your machine:
-
-- [Git](https://git-scm.com/)
-- [Node.js](https://nodejs.org/en)
-- [npm](https://www.npmjs.com/) (Node Package Manager)
-
-**Cloning the Repository**
+### **1. Clone the Repository**
 
 ```bash
-git clone https://github.com/AayushBharti/Next-ventures.git
-cd pitchify
-```
+git clone https://github.com/Sunny-Saurya/VenturesBoard.git
+cd VenturesBoard
+
 
 <!-- **Installation**
 
@@ -141,5 +96,15 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) in your browser to view the
 project. -->
-# VentureBoard
-# VentureBoard
+
+
+🤝 Contributing
+
+Contributions, issues, and feature requests are welcome!
+Feel free to open a PR or report bugs.
+
+⭐ Show Your Support
+
+If you like this project, consider giving it a ⭐ on GitHub!
+
+<div align="center"> Built with ❤️ by Sunny Kumar </div> ```
