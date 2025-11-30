@@ -48,7 +48,7 @@ export default function Introduction() {
               ))}
             </span>
             <span className="block text-pink-400">
-              That&apos;s why we built Next ventures.
+              That&apos;s why we built Ventures Board.
             </span>
           </div>
         </div>
