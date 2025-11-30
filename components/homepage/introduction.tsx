@@ -31,7 +31,7 @@ export default function Introduction() {
       <div className="container">
         <div className="sticky top-20 md:top-28 lg:top-40">
           <div className="flex justify-center">
-            <Tag>Introducing Next ventures</Tag>
+            <Tag>Introducing Ventures Board</Tag>
           </div>
 
           <div className="mt-10 text-center text-4xl font-medium md:text-6xl lg:text-7xl">
