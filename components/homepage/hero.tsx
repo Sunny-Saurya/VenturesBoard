@@ -6,8 +6,8 @@ import { useEffect, useRef } from "react"
 
 import Pointer from "@/components/pointer"
 import cursorYouImage from "@/public/images/cursor-you.svg"
-import designExample1Image from "@/public/images/design-example-1.png"
-import designExample2Image from "@/public/images/design-example-2.png"
+import designExample1Image from "@/public/images/Design1.png"
+import designExample2Image from "@/public/images/Design2.png"
 
 import SearchForm from "../search-form"
 
@@ -74,10 +74,13 @@ export default function Hero() {
           dragConstraints={{ left: -100, top: -300, right: 850, bottom: 200 }}
           className="absolute -left-32 top-16 z-50 hidden lg:block"
         >
-          <Image
+          <Image 
             src={designExample1Image}
             alt="design example 1 image"
             draggable={false}
+            width={300}
+            height={300}
+            className="h-auto w-[300px] rounded-lg"
           />
         </motion.div>
         <motion.div
@@ -99,6 +102,9 @@ export default function Hero() {
             src={designExample2Image}
             alt="design example 2 image"
             draggable={false}
+            width={300}
+            height={300}
+            className="h-auto w-[300px] rounded-lg"
           />
         </motion.div>
         <motion.div

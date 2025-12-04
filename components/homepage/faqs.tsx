@@ -7,14 +7,14 @@ import { cn } from "@/lib/utils"
 
 const faqs = [
   {
-    question: "What makes Next ventures unique?",
+    question: "What makes VentureBoard unique?",
     answer:
-      "Next ventures combines simplicity with powerful features to help entrepreneurs share their ideas and gain exposure. It’s designed to be user-friendly and offers tools specifically tailored for virtual pitch competitions and networking.",
+      "VentureBoard combines simplicity with powerful features to help entrepreneurs share their ideas and gain exposure. It’s designed to be user-friendly and offers tools specifically tailored for virtual pitch competitions and networking.",
   },
   {
-    question: "Is Next ventures suitable for beginners?",
+    question: "Is VentureBoard suitable for beginners?",
     answer:
-      "Absolutely! Next ventures is intuitive and easy to use from the start. Whether you’re an experienced entrepreneur or just starting out, the platform guides you every step of the way.",
+      "Absolutely! VentureBoard is intuitive and easy to use from the start. Whether you’re an experienced entrepreneur or just starting out, the platform guides you every step of the way.",
   },
   {
     question: "How does the pitch submission process work?",
@@ -24,12 +24,12 @@ const faqs = [
   {
     question: "Can I collaborate with others on my pitch?",
     answer:
-      "Yes! Next ventures allows you to invite collaborators to work on pitches, share insights, and refine your ideas for the best presentation.",
+      "Yes! VentureBoard allows you to invite collaborators to work on pitches, share insights, and refine your ideas for the best presentation.",
   },
   {
     question: "What kind of exposure can I expect?",
     answer:
-      "Next ventures is designed to connect you with a global audience of entrepreneurs, investors, and innovators. Your ideas can gain visibility through voting, networking, and virtual competitions.",
+      "VentureBoard is designed to connect you with a global audience of entrepreneurs, investors, and innovators. Your ideas can gain visibility through voting, networking, and virtual competitions.",
   },
 ]
 
