@@ -14,7 +14,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         process.env.GITHUB_SECRET || process.env.AUTH_GITHUB_SECRET || "",
     }),
   ],
-  secret: process.env.NEXTAUTH_SECRET,
+  secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
+  trustHost: true,
   callbacks: {
     // Runs after a successful OAuth sign in. Ensure the author exists in Sanity.
     async signIn({ user, profile }) {
