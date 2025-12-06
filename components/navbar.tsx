@@ -13,7 +13,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import logoImage from "@/public/images/logo.svg"
+import logoImage from "@/public/images/logo1.png"
 
 const navLinks = [
   { label: "Home", href: "/", icon: Home },
@@ -37,7 +37,7 @@ const Navbar = async () => {
                   src={logoImage}
                   alt="Next ventures logo"
                   width={120}
-                  height={40}
+                  height={80}
                   className="h-6 w-auto"
                 />
               </Link>

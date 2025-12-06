@@ -1,6 +1,6 @@
 import Image from "next/image"
 
-import logoImage from "@/public/images/logo.svg"
+import logoImage from "@/public/images/logo1.png"
 
 const footerLinks = [
   { href: "#", label: "Contact" },
@@ -14,7 +14,8 @@ export default function Footer() {
       <div className="container">
         <div className="flex flex-col items-center gap-6 md:flex-row md:justify-between">
           <div className="flex justify-center">
-            <Image src={logoImage} alt="layrs logo" />
+            <Image width={120}
+                  height={60} src={logoImage} alt="layrs logo" />
           </div>
           <div>
             <nav className="flex gap-6">
