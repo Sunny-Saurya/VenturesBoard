@@ -401,89 +401,80 @@ const StartupForm = ({ initialData, isEditing = false }: StartupFormProps) => {
             {errors.category && <p className="text-sm text-red-500">{errors.category}</p>}
           </div>
 
-          {/* Image Link */}
-          <div className="space-y-2">
-            <Label htmlFor="link">Image URL</Label>
+          {/* Image Upload */}
+          <div className="space-y-3">
+            <Label htmlFor="link">Startup Image</Label>
             
             {/* Image Preview */}
             {imageUrl && (
-              <div className="relative mb-4 rounded-lg overflow-hidden bg-white/5 border border-white/10">
+              <div className="relative mb-3 rounded-xl overflow-hidden bg-neutral-800/50 border border-white/10">
                 <img 
                   src={imageUrl} 
                   alt="Preview" 
-                  className="w-full h-48 object-cover"
+                  className="w-full h-56 object-cover"
                 />
                 <button
+                  type="button"
                   onClick={() => {
                     setImageUrl("")
                     setImageFile(null)
                     const imageInput = document.getElementById("link") as HTMLInputElement
                     if (imageInput) imageInput.value = ""
                   }}
-                  className="absolute top-2 right-2 bg-red-500 hover:bg-red-600 rounded-full p-1"
+                  className="absolute top-3 right-3 bg-red-500 hover:bg-red-600 rounded-full p-2 transition-colors shadow-lg"
                 >
                   <X className="size-4 text-white" />
                 </button>
               </div>
             )}
 
-            {/* Upload Area */}
-            <div
-              onDragEnter={handleDrag}
-              onDragLeave={handleDrag}
-              onDragOver={handleDrag}
-              onDrop={handleDrop}
-              className={`relative rounded-lg border-2 border-dashed transition-colors p-6 text-center cursor-pointer ${
-                dragActive
-                  ? "border-pink-400 bg-pink-500/10"
-                  : "border-white/20 bg-white/5 hover:bg-white/10"
-              }`}
-            >
-              <input
-                id="image-upload"
-                type="file"
-                accept="image/*"
-                onChange={handleImageInput}
-                disabled={isUploading}
-                className="absolute inset-0 opacity-0 cursor-pointer"
-              />
-              <div className="flex flex-col items-center gap-2">
-                <Upload className="size-6 text-white/60" />
-                <div>
-                  <p className="text-sm font-medium text-white">
-                    {isUploading ? "Uploading..." : "Drag & drop your image here"}
-                  </p>
-                  <p className="text-xs text-white/60">or click to select (max 5MB)</p>
+            {/* Upload/Drop Area */}
+            {!imageUrl && (
+              <div
+                onDragEnter={handleDrag}
+                onDragLeave={handleDrag}
+                onDragOver={handleDrag}
+                onDrop={handleDrop}
+                className={`relative rounded-xl border-2 border-dashed transition-all duration-200 p-8 text-center cursor-pointer ${
+                  dragActive
+                    ? "border-pink-400 bg-pink-500/20 scale-[1.02]"
+                    : "border-white/20 bg-white/5 hover:bg-white/10 hover:border-white/30"
+                }`}
+              >
+                <input
+                  id="image-upload"
+                  type="file"
+                  accept="image/*"
+                  onChange={handleImageInput}
+                  disabled={isUploading}
+                  className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
+                />
+                <div className="flex flex-col items-center gap-3 pointer-events-none">
+                  <div className="rounded-full bg-white/10 p-4">
+                    <Upload className={`size-8 ${dragActive ? "text-pink-400" : "text-white/60"}`} />
+                  </div>
+                  <div>
+                    <p className="text-base font-medium text-white mb-1">
+                      {isUploading ? "Uploading image..." : "Drop your image here"}
+                    </p>
+                    <p className="text-sm text-white/50">or click to browse</p>
+                    <p className="text-xs text-white/40 mt-2">
+                      Supports: JPG, PNG, GIF, WebP (max 5MB)
+                    </p>
+                  </div>
                 </div>
               </div>
-            </div>
+            )}
 
-            {/* URL Input */}
-            <div className="space-y-2 mt-4">
-              <Label htmlFor="link" className="text-xs text-white/60">Or paste image URL</Label>
-              <Input
-                id="link"
-                name="link"
-                placeholder="https://example.com/image.jpg"
-                defaultValue={initialData?.image}
-                onChange={(e) => {
-                  setImageUrl(e.target.value)
-                  if (e.target.value && !e.target.value.startsWith("data:")) {
-                    // Validate it's a valid URL
-                    try {
-                      new URL(e.target.value)
-                    } catch {
-                      // Invalid URL, but allow user to type
-                    }
-                  }
-                }}
-              />
-              <p className="text-xs text-white/60">
-                Supported formats: JPG, PNG, GIF, WebP
-              </p>
-            </div>
+            {/* Hidden input for form submission */}
+            <input
+              type="hidden"
+              id="link"
+              name="link"
+              value={imageUrl}
+            />
 
-            {errors.link && <p className="text-sm text-red-500">{errors.link}</p>}
+            {errors.link && <p className="text-sm text-red-500 mt-2">{errors.link}</p>}
           </div>
 
           {/* Pitch (Markdown Editor) */}

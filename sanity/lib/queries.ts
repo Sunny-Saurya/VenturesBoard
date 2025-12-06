@@ -115,3 +115,31 @@ export const RECENT_STARTUPS_QUERY =
   category,
   image,
 }`)
+
+export const COMMENTS_BY_STARTUP_QUERY =
+  defineQuery(`*[_type == "comment" && startup._ref == $startupId] | order(createdAt desc) {
+  _id,
+  content,
+  createdAt,
+  author -> {
+    _id,
+    name,
+    username,
+    image
+  }
+}`)
+
+export const REACTIONS_BY_STARTUP_QUERY =
+  defineQuery(`*[_type == "reaction" && startup._ref == $startupId] {
+  _id,
+  type,
+  author -> {
+    _id
+  }
+}`)
+
+export const USER_REACTION_QUERY =
+  defineQuery(`*[_type == "reaction" && startup._ref == $startupId && author._ref == $authorId][0] {
+  _id,
+  type
+}`)

@@ -6,6 +6,7 @@ import { Suspense } from "react"
 
 import { GeneralSwiper } from "@/components/general-swiper"
 import { PitchActions } from "@/components/pitch-actions"
+import { PitchInteractions } from "@/components/pitch-interactions"
 import StartupCard, { StartupTypeCard } from "@/components/startup-card"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Badge } from "@/components/ui/badge"
@@ -17,6 +18,9 @@ import { client } from "@/sanity/lib/client"
 import {
   PLAYLIST_BY_SLUG_QUERY,
   STARTUP_BY_ID_QUERY,
+  COMMENTS_BY_STARTUP_QUERY,
+  REACTIONS_BY_STARTUP_QUERY,
+  USER_REACTION_QUERY,
 } from "@/sanity/lib/queries"
 import { auth } from "@/auth"
 
@@ -34,17 +38,26 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
   const session = await auth()
 
   // Fetch with useCdn: false to get fresh data for newly created startups
-  const [post, playlistResult] = await Promise.all([
+  const [post, playlistResult, comments, reactions, userReaction] = await Promise.all([
     client.withConfig({ useCdn: false }).fetch(STARTUP_BY_ID_QUERY, { id }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, {
       slug: "editor-picks",
     }),
+    client.withConfig({ useCdn: false }).fetch(COMMENTS_BY_STARTUP_QUERY, { startupId: id }),
+    client.withConfig({ useCdn: false }).fetch(REACTIONS_BY_STARTUP_QUERY, { startupId: id }),
+    session?.id
+      ? client.withConfig({ useCdn: false }).fetch(USER_REACTION_QUERY, { startupId: id, authorId: session.id })
+      : null,
   ]) 
 
   // Handle null playlist result gracefully (playlist may not exist yet)
   const editorPosts = playlistResult?.select ?? []
 
   if (!post) return notFound()
+
+  // Calculate likes and dislikes
+  const likes = reactions?.filter((r: any) => r.type === "like").length || 0
+  const dislikes = reactions?.filter((r: any) => r.type === "dislike").length || 0
 
   const parsedContent = md.render(post?.pitch || "")
 
@@ -120,6 +133,18 @@ const Page = async ({ params }: { params: Promise<{ id: string }> }) => {
             )}
           </CardContent>
         </Card>
+
+        {/* Interactions Section */}
+        <div className="mx-auto mt-12 max-w-4xl">
+          <PitchInteractions
+            startupId={post._id}
+            comments={comments || []}
+            likes={likes}
+            dislikes={dislikes}
+            userReaction={userReaction?.type || null}
+            currentUserId={session?.id}
+          />
+        </div>
 
         <hr className="my-12 bg-gray-700" />
         {editorPosts && editorPosts.length > 0 && (

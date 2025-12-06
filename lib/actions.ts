@@ -331,3 +331,142 @@ export const deleteAllUserPitches = async () => {
     })
   }
 }
+
+export const addComment = async (startupId: string, content: string) => {
+  const session = await auth()
+
+  if (!session || !session.id) {
+    return parseServerActionResponse({
+      error: "Not signed in",
+      status: "ERROR",
+    })
+  }
+
+  if (!content.trim()) {
+    return parseServerActionResponse({
+      error: "Comment cannot be empty",
+      status: "ERROR",
+    })
+  }
+
+  try {
+    const comment = await writeClient.create({
+      _type: "comment",
+      content: content.trim(),
+      author: {
+        _type: "reference",
+        _ref: session.id,
+      },
+      startup: {
+        _type: "reference",
+        _ref: startupId,
+      },
+      createdAt: new Date().toISOString(),
+    })
+
+    revalidatePath(`/startup/${startupId}`)
+
+    return parseServerActionResponse({
+      ...comment,
+      status: "SUCCESS",
+      error: "",
+    })
+  } catch (error) {
+    console.error("addComment error:", error)
+
+    const message =
+      (error as any)?.message ||
+      (typeof error === "string" ? error : JSON.stringify(error)) ||
+      "Unknown error"
+
+    return parseServerActionResponse({
+      error: message,
+      status: "ERROR",
+    })
+  }
+}
+
+export const toggleReaction = async (
+  startupId: string,
+  reactionType: "like" | "dislike"
+) => {
+  const session = await auth()
+
+  if (!session || !session.id) {
+    return parseServerActionResponse({
+      error: "Not signed in",
+      status: "ERROR",
+    })
+  }
+
+  try {
+    // Check if user already has a reaction
+    const existingReaction = await writeClient
+      .withConfig({ useCdn: false })
+      .fetch(
+        `*[_type == "reaction" && startup._ref == $startupId && author._ref == $authorId][0]{ _id, type }`,
+        { startupId, authorId: session.id }
+      )
+
+    if (existingReaction) {
+      // If same reaction type, remove it (toggle off)
+      if (existingReaction.type === reactionType) {
+        await writeClient.delete(existingReaction._id)
+        revalidatePath(`/startup/${startupId}`)
+        return parseServerActionResponse({
+          status: "SUCCESS",
+          action: "removed",
+          error: "",
+        })
+      } else {
+        // If different reaction type, update it
+        await writeClient
+          .patch(existingReaction._id)
+          .set({ type: reactionType })
+          .commit()
+
+        revalidatePath(`/startup/${startupId}`)
+        return parseServerActionResponse({
+          status: "SUCCESS",
+          action: "updated",
+          type: reactionType,
+          error: "",
+        })
+      }
+    } else {
+      // Create new reaction
+      const reaction = await writeClient.create({
+        _type: "reaction",
+        type: reactionType,
+        author: {
+          _type: "reference",
+          _ref: session.id,
+        },
+        startup: {
+          _type: "reference",
+          _ref: startupId,
+        },
+      })
+
+      revalidatePath(`/startup/${startupId}`)
+      return parseServerActionResponse({
+        ...reaction,
+        status: "SUCCESS",
+        action: "created",
+        error: "",
+      })
+    }
+  } catch (error) {
+    console.error("toggleReaction error:", error)
+
+    const message =
+      (error as any)?.message ||
+      (typeof error === "string" ? error : JSON.stringify(error)) ||
+      "Unknown error"
+
+    return parseServerActionResponse({
+      error: message,
+      status: "ERROR",
+    })
+  }
+}
