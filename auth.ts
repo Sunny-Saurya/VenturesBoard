@@ -4,6 +4,8 @@ import GitHub from "next-auth/providers/github"
 import { client } from "@/sanity/lib/client"
 import { AUTHOR_BY_GITHUB_ID_QUERY } from "@/sanity/lib/queries"
 import { writeClient } from "@/sanity/lib/write-client"
+import connectDB from "@/lib/mongodb"
+import User from "@/models/User"
 
 // Minimal, safe NextAuth setup using environment variables.
 export const { handlers, auth, signIn, signOut } = NextAuth({
@@ -17,7 +19,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   secret: process.env.NEXTAUTH_SECRET || process.env.AUTH_SECRET,
   trustHost: true,
   callbacks: {
-    // Runs after a successful OAuth sign in. Ensure the author exists in Sanity.
+    // Runs after a successful OAuth sign in. Ensure the author exists in Sanity and MongoDB.
     async signIn({ user, profile }) {
       try {
         // cast to any to avoid tight TypeScript coupling with callback types
@@ -30,6 +32,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
           return true
         }
 
+        // Save to Sanity (existing logic)
         const existingUser = await client
           .withConfig({ useCdn: false })
           .fetch(AUTHOR_BY_GITHUB_ID_QUERY, { id: githubId })
@@ -46,6 +49,37 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             image: u?.image || "",
             bio: p?.bio || "",
           })
+        }
+
+        // Save to MongoDB
+        try {
+          await connectDB()
+
+          const existingMongoUser = await User.findOne({ githubId: String(githubId) })
+
+          if (existingMongoUser) {
+            // Update last login time
+            existingMongoUser.lastLogin = new Date()
+            existingMongoUser.name = u?.name || existingMongoUser.name
+            existingMongoUser.image = u?.image || existingMongoUser.image
+            await existingMongoUser.save()
+            console.log("Updated existing MongoDB user:", existingMongoUser.email)
+          } else {
+            // Create new user in MongoDB
+            const newUser = await User.create({
+              githubId: String(githubId),
+              name: u?.name || "",
+              email: u?.email || "",
+              username: p?.login || "",
+              image: u?.image || "",
+              bio: p?.bio || "",
+              lastLogin: new Date(),
+            })
+            console.log("Created new MongoDB user:", newUser.email)
+          }
+        } catch (mongoError) {
+          console.error("MongoDB user save error:", mongoError)
+          // Don't fail sign-in if MongoDB fails
         }
 
         return true
